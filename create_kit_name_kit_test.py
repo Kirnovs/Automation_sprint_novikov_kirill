@@ -37,10 +37,16 @@ def test_positive_assert(kit_body):
     abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdAbcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabc\
     dabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdab\
     cdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcD", id="more than 511 letters"),
-    pytest.param(0, id="parameter was not passed"),
     pytest.param(123, id="parameter number")
 ])
 def test_negative_assert_code_400(kit_body):
     auth_token = get_new_user_token()
+    res = sender_stand_request.post_new_client_kit(kit_body, auth_token)
+    assert res.status_code == 400
+
+
+def test_negative_assert_code_400_parameter_was_not_passed():
+    auth_token = get_new_user_token()
+    kit_body = {}
     res = sender_stand_request.post_new_client_kit(kit_body, auth_token)
     assert res.status_code == 400
